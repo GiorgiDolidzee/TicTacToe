@@ -1,8 +1,10 @@
 package com.example.dali
 
 import android.graphics.Color
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.style.BackgroundColorSpan
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
@@ -90,12 +92,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun playGame(buttonNumber: Int, clickedView: Button) {
         if (activePlayer == 1) {
             clickedView.text = "X"
-            clickedView.setBackgroundColor(Color.RED)
+            clickedView.setBackgroundResource(R.drawable.farshbutton)
             firstPlayer.add(buttonNumber)
             activePlayer = 2
         } else {
             clickedView.text = "0"
-            clickedView.setBackgroundColor(Color.YELLOW)
+            clickedView.setBackgroundResource(R.drawable.arwbutton)
             secondPlayer.add(buttonNumber)
             activePlayer = 1
         }
@@ -158,9 +160,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         if (winnerPlayer != 0) {
             if (winnerPlayer == 1) {
-                Toast.makeText(this, "X-მა მოიგო", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "გაშალა ფარშევანგმა კუდი", Toast.LENGTH_LONG).show()
+                sound()
             } else {
-                Toast.makeText(this, "0-მა მოიგო", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "რამდენი იწვალა მაგრამ..", Toast.LENGTH_LONG).show()
+                arwsound()
             }
             disableButton()
 
@@ -216,8 +220,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             secondPlayer.clear()
             activePlayer = 1
             init()
-            Toast.makeText(this, "5 ქულა მინდა :(", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "იქნებ შემდეგ ცდაზე გაშალოს", Toast.LENGTH_LONG).show()
         }
+    }
+    fun sound() {
+        val winsound  = MediaPlayer.create(this, R.raw.sound)
+        winsound.start()
+    }
+
+    fun arwsound() {
+        val arwivisound = MediaPlayer.create(this,R.raw.arwivisound)
+        arwivisound.start()
     }
 
 }
